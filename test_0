@@ -1,0 +1,286 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import json
+import requests  # pip install requests
+
+
+def select(arg_user,arg_pw,arg_phenotype):
+
+    token_url = 'https://genomicexplorer.io/v0/api-token-auth/'
+    payload = {
+        'username': arg_user,
+        'password': arg_pw
+    }
+    response = requests.post(token_url, data=payload)
+    token = response.json()['token']
+
+    phenotype = arg_phenotype
+    report_url = 'https://genomicexplorer.io/v0/reports/{}'.format(phenotype)
+    headers = {
+        'Authorization': 'JWT {}'.format(token)
+    }
+    response = requests.get(report_url, headers=headers)
+    data = response.json()
+
+    return data
+
+    #print json.dumps(data)
+
+
+def calc_score(arg_score_type_list, arg_score_dict):
+
+    #print arg_score_type_list
+    #print arg_score_dict
+
+    score = 0.0
+    for p_type in arg_score_type_list:
+        #print p_type
+        #print arg_score_dict[p_type]
+        score += arg_score_dict[p_type]
+
+    score = score / ( len(arg_score_type_list) * 4 )
+
+    return score
+
+
+def _main():
+    token_url = 'https://genomicexplorer.io/v0/api-token-auth/'
+    payload = {
+        'username': 'g-supernova-a1',
+        'password': '6yudwn9Lc6bna'
+    }
+    response = requests.post(token_url, data=payload)
+    token = response.json()['token']
+
+    phenotype = 'novelty-seeking'
+    report_url = 'https://genomicexplorer.io/v0/reports/{}'.format(phenotype)
+    headers = {
+        'Authorization': 'JWT {}'.format(token)
+    }
+    response = requests.get(report_url, headers=headers)
+    data = response.json()
+
+    # return data
+
+    print json.dumps(data)
+
+if __name__ == '__main__':
+    # _main()
+
+    usr_list = [
+        'g-supernova-a1',
+        'g-supernova-a2',
+        'g-supernova-a3',
+        'g-supernova-a4',
+        'g-supernova-a5',
+        'g-supernova-a6',
+        'g-supernova-a7',
+        'g-supernova-a8',
+        'g-supernova-a9',
+        'g-supernova-a10',
+    ]
+
+    pw_list = [
+        '6yudwn9Lc6bna',
+        'WEdXbAfNSczr4',
+        'csqdchzfwzxf3',
+        '94zhdSmw2qE6L',
+        'nEfMkAhSSzua3',
+        'TmALyX8FCW65w',
+        'jc2yF9nthwzem',
+        'G3L9nCw34mpyU',
+        'jqam84FY3PGSR',
+        'FP9gSyBa3dqbF',
+    ]
+
+
+#    usr_list = [
+#        'g-supernova-a1',
+#    ]
+
+#    pw_list = [
+#        '6yudwn9Lc6bna',
+#    ]
+
+    phenotype_list = ['musical-ability',
+                        'word-reading',
+                        'information-processing',
+                        'sensory-perception-of-smell',
+                        'memory-performance-',
+                        'intelligence',
+                        'intelligence-childhood',
+                        'reading',
+                        'depression',
+                        'conscientiousness',
+                        'agreeableness',
+                        'anger',
+                        'anxiety',
+                        'gambling',
+                        'novelty-seeking',
+                        'harm-avoidance',
+                        'neuroticism',
+                        'extraversion',
+                        'openness',
+                        'reward-dependence',
+                        'economic-and-political-preferences',
+                        'social-communication-problems',
+                        'endurance-performance',
+                        'exercise-treadmill-test-traits',
+                        'body-fat-percentage',
+                        'hemoglobin-levels',
+                        'breat-size',
+                        'hand-grip-strength',
+                        'height',
+                        'sweet-taste',
+                        'acidly-taste',
+                        'salty-taste',
+                        'tangy-taste',
+                        'dry-taste',
+                        'mellow-taste',
+                        'alcohol-drinking-behavior',
+                        'vitamin-d-insufficiency',
+                        'motion-sickness',
+                        'nicotine-metabolite-ratio',
+                        'inattentive-symptoms',
+                        'lung-cancer',
+                        'colorectal-cancer',
+                        'gastric-cancer',
+                        'breast-cancer',
+                        'liver-cancer',
+                        'pancreatic-cancer',
+                        'prostate-cancer',
+                        'type-2-diabetes',
+                        'myocardial-infarction',
+                        'stroke',
+                        'gout',
+                        'rheumatoid-arthritis',
+                        'atopic-dermatitis',
+                        'asthma',
+                        'ovarian-cancer',
+                        'cervical-cancer',
+                        'higher-blood-pressure',
+                      ]
+
+    piano_list = [
+                    'musical-ability',
+                    'information-processing',
+                    'memory-performance-',
+                    'intelligence',
+                    'intelligence-childhood',
+                    'reading']
+
+
+    swiming_list = [
+                    'endurance-performance',
+                    'exercise-treadmill-test-traits',
+                    'body-fat-percentage',
+                    'hemoglobin-levels',
+                    'breat-size',
+        ]
+
+    english_list = [
+        'word-reading',
+        'information-processing',
+        'memory-performance-',
+        'intelligence',
+        'intelligence-childhood',
+        'novelty-seeking',
+        'extraversion',
+        'openness',
+        'social-communication-problems',
+    ]
+
+    juku_list = [
+        'information-processing',
+        'memory-performance-',
+        'intelligence',
+        'intelligence-childhood',
+        'reading',
+        'novelty-seeking',
+    ]
+
+    shuji_list = [
+        'intelligence',
+        'intelligence-childhood',
+        'reading',
+        'novelty-seeking',
+        'hand-grip-strength',
+    ]
+
+    taisou_list = [
+        'body-fat-percentage',
+        'hand-grip-strength',
+    ]
+
+    football_list = [
+        'agreeableness',
+        'endurance-performance',
+        'exercise-treadmill-test-traits',
+        'body-fat-percentage',
+        'hemoglobin-levels',
+    ]
+
+    rithmic_list = [
+        'musical-ability',
+    ]
+
+    cooking_list = [
+        'sensory-perception-of-smell',
+        'sweet-taste',
+        'acidly-taste',
+        'salty-taste',
+        'tangy-taste',
+        'dry-taste',
+        'mellow-taste',
+    ]
+
+    total_score = {}
+
+    count = 0
+    for user in usr_list:
+        print user
+
+        score_dict = {}
+        score_result_dict = {}
+
+        for p_type in phenotype_list:
+
+            json_dict = select(user, pw_list[count], p_type)
+            summary_dict = json_dict['summary']
+
+            #print p_type + "," + str(summary_dict['score'])
+
+            score_dict[p_type] = summary_dict['score']
+
+            #print score_dict[p_type]
+
+        score_result_dict['piano'] = calc_score(piano_list, score_dict)
+        score_result_dict['swiming'] = calc_score(swiming_list, score_dict)
+        score_result_dict['english'] = calc_score(english_list, score_dict)
+        score_result_dict['juku'] = calc_score(juku_list, score_dict)
+        score_result_dict['shuji'] = calc_score(shuji_list, score_dict)
+        score_result_dict['taisou'] = calc_score(taisou_list, score_dict)
+        score_result_dict['football'] = calc_score(football_list, score_dict)
+        score_result_dict['rithmic'] = calc_score(rithmic_list, score_dict)
+        score_result_dict['cooking'] = calc_score(cooking_list, score_dict)
+
+        print 'piano' + ',' + str(score_result_dict['piano'])
+        print 'swiming' + ',' + str(score_result_dict['swiming'])
+        print 'english' + ',' + str(score_result_dict['english'])
+        print 'juku' + ',' + str(score_result_dict['juku'])
+        print 'shuji' + ',' + str(score_result_dict['shuji'])
+        print 'taisou' + ',' + str(score_result_dict['taisou'])
+        print 'football' + ',' + str(score_result_dict['football'])
+        print 'rithmic' + ',' + str(score_result_dict['rithmic'])
+        print 'cooking' + ',' + str(score_result_dict['cooking'])
+        #print score_result_dict
+        #json.dumps(score_result_dict)
+
+        #total_score[user] = score_result_dict
+
+        count += 1
+        print '-----------------------------------------------------------'
+
+    #print total_score
+    #json.dumps(total_score)
